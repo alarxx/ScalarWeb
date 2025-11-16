@@ -1,1 +1,4 @@
 # ScalarWeb
+
+https://scalar.kz/
+
