@@ -24,23 +24,43 @@
             font-size: 1.2rem;
             opacity: 0.8;
         }
-        .btn {
-            margin-top: 20px;
-            padding: 12px 24px;
-            background: #ff0066;
+
+        .links {
+            margin-top: 25px;
+            display: flex;
+            gap: 20px;
+        }
+
+        .link-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 18px;
+            background: #1a1a1a;
             border-radius: 8px;
             text-decoration: none;
             color: white;
             font-weight: bold;
+            border: 1px solid #333;
+            transition: 0.2s ease;
         }
-        .btn:hover {
-            opacity: 0.8;
+
+        .link-btn:hover {
+            border-color: #ff0066;
         }
     </style>
 </head>
 <body>
+
     <h1>Scalar</h1>
-    <p>alar.akilbekov@gmail.com</p>
+    <p>Alar Akilbekov</p>
+
+    <div class="links">
+        <a class="link-btn" href="mailto:alar.akilbekov@gmail.com" target="_blank">Gmail</a>
+        <a class="link-btn" href="https://github.com/alarxx/" target="_blank">GitHub</a>
+        <a class="link-btn" href="https://www.linkedin.com/in/alar-akilbekov/" target="_blank">LinkedIn</a>
+        <a class="link-btn" href="https://t.me/alarxx/" target="_blank">Telegram</a>
+    </div>
+
 </body>
 </html>
-
