@@ -21,7 +21,24 @@
             padding: 20px;
         }
 
-        h1 { font-size: 3rem; margin: 0; }
+        h1 {
+            font-size: 3rem;
+            margin: 0;
+            background: linear-gradient(120deg, #ff0033, #00cc66, #ff0033);
+            background-size: 300% 300%;
+            animation: titleSpin 8s ease-in-out infinite;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        @keyframes titleSpin {
+            0%   { background-position: 0% 0%; }
+            50%  { background-position: 180% 180%; }
+            100% { background-position: 0% 0%; }
+        }
+
+
         .subtitle { font-size: 1.3rem; opacity: .85; margin-top: 6px; }
 
         .bottom {
@@ -39,18 +56,54 @@
         }
 
         .link-btn {
-            padding: 10px 18px;
-            background: #1a1a1a;
-            border-radius: 6px;
+            position: relative;
+            display: inline-block;
+            padding: 2px; /* толщина ободка */
+            border-radius: 8px;
             text-decoration: none;
-            color: white;
-            border: 1px solid #333;
-            transition: .2s;
-            min-width: 110px;
-            font-weight: bold;
+            overflow: hidden;
         }
 
-        .link-btn:hover { border-color: #ff0066; }
+        .link-btn::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            background: linear-gradient(120deg, #ff0033, #00cc66, #ff0033);
+            background-size: 300% 300%;
+            opacity: 0;
+            transition: opacity .2s ease-in-out;
+            z-index: 0;
+        }
+
+        .link-btn:hover::before {
+            opacity: 1;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0%   { background-position: 0% 50%; }
+            50%  { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .link-btn span {
+            position: relative;
+            z-index: 1;
+            display: block;
+            padding: 10px 18px;
+            min-width: 110px;
+            border-radius: 6px;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            color: #fff;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .link-btn span:hover {
+            border-color: #ff0066;
+        }
 
         @media (max-width: 480px) {
             h1 { font-size: 2.3rem; }
@@ -64,15 +117,14 @@
     <h1>Scalar</h1>
     <div class="subtitle">High-Performance Computing</div>
 
-
     <div class="bottom">
         <div class="author">Alar Akilbekov</div>
 
         <div class="links">
-            <a class="link-btn" href="mailto:alar.akilbekov@gmail.com">Gmail</a>
-            <a class="link-btn" href="https://github.com/alarxx/">GitHub</a>
-            <a class="link-btn" href="https://www.linkedin.com/in/alar-akilbekov/">LinkedIn</a>
-            <a class="link-btn" href="https://t.me/alarxx/">Telegram</a>
+            <a class="link-btn" href="mailto:alar.akilbekov@gmail.com"><span>Gmail</span></a>
+            <a class="link-btn" href="https://github.com/alarxx/"><span>GitHub</span></a>
+            <a class="link-btn" href="https://www.linkedin.com/in/alar-akilbekov/"><span>LinkedIn</span></a>
+            <a class="link-btn" href="https://t.me/alarxx/"><span>Telegram</span></a>
         </div>
     </div>
 
