@@ -11,10 +11,12 @@
             background: #0d0d0d;
             color: #fff;
             display: flex;
-            height: 100vh;
+            min-height: 100vh;
             align-items: center;
             justify-content: center;
             flex-direction: column;
+            padding: 20px;
+            text-align: center;
         }
         h1 {
             font-size: 3rem;
@@ -28,14 +30,17 @@
         .links {
             margin-top: 25px;
             display: flex;
-            gap: 20px;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
         .link-btn {
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 8px;
-            padding: 10px 18px;
+            padding: 12px 20px;
             background: #1a1a1a;
             border-radius: 8px;
             text-decoration: none;
@@ -43,10 +48,25 @@
             font-weight: bold;
             border: 1px solid #333;
             transition: 0.2s ease;
+            min-width: 120px;
         }
 
         .link-btn:hover {
             border-color: #ff0066;
+        }
+
+        /* ---- mobile ---- */
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            p {
+                font-size: 1rem;
+            }
+            .link-btn {
+                width: 100%;
+                max-width: 260px;
+            }
         }
     </style>
 </head>
