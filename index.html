@@ -2,7 +2,10 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
     <link rel="icon" type="image/png" href="favicon.png">
     <title>Scalar</title>
 
@@ -12,13 +15,15 @@
             font-family: Arial, sans-serif;
             background: #0d0d0d;
             color: #fff;
+
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             text-align: center;
-            padding: 20px;
+            /*padding: 20px; */
+            transform: translateY(-20vh);
         }
 
         h1 {
@@ -109,6 +114,12 @@
             h1 { font-size: 2.3rem; }
             .subtitle { font-size: 1.1rem; }
         }
+
+        html, body {
+            overscroll-behavior: none;
+            touch-action: manipulation;
+        }
+
     </style>
 </head>
 
