@@ -6,6 +6,9 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
 
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+
     <link rel="icon" type="image/png" href="favicon.png">
     <title>Scalar</title>
 
@@ -228,6 +231,24 @@
         }
 
 
+        .socials {
+            margin-top: 5px;
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .socials a {
+            font-size: 1.6rem;
+            color: #888;
+            transition: color .2s ease;
+        }
+
+        .socials a:hover {
+            color: #fff;
+        }
+
+
     </style>
 </head>
 
@@ -269,13 +290,22 @@
         <div class="bottom">
             <div class="author">Alar Akilbekov</div>
 
-            <div class="links">
+            <!--<div class="links">
                 <a class="link-btn" href="mailto:alar.akilbekov@gmail.com"><span>Gmail</span></a>
                 <a class="link-btn" href="https://github.com/alarxx/"><span>GitHub</span></a>
                 <a class="link-btn" href="https://www.linkedin.com/in/alar-akilbekov/"><span>LinkedIn</span></a>
                 <a class="link-btn" href="https://t.me/alarxx/"><span>Telegram</span></a>
+            </div>-->
+
+            <div class="socials">
+                <a href="mailto:alar.akilbekov@gmail.com"> <i class="bi bi-envelope-fill"></i></a>
+                <a href="https://github.com/alarxx/"> <i class="bi bi-github"></i></a>
+                <a href="https://www.linkedin.com/in/alar-akilbekov/"> <i class="bi bi-linkedin"> </i></a>
+                <a href="https://t.me/alarxx/"> <i class="bi bi-telegram"></i> </a>
             </div>
         </div>
+
+
     </footer>
 
     <!--carousel cards-->
