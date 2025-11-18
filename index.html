@@ -481,7 +481,7 @@
                 const timer = setInterval(function() {
                     // сколько времени прошло с начала анимации?
                     // Закончить анимацию через 0.5, 3 секунды
-                    if (Date.now() - start >= 3000) {
+                    if (Date.now() - start >= 10000) {
                         ob.delete();
                         return;
                     }
@@ -492,8 +492,10 @@
             }
 
             update(dt){
-                this.updateVel(dt);
-                this.updatePos(dt);
+                if(this.#inMotion){
+                    this.updateVel(dt);
+                    this.updatePos(dt);
+                }
             }
 
             // updatePos(dt){
@@ -527,10 +529,10 @@
 
                 }
                 if (y >= maxY){
-                    // console.log("ground touched");
+                    // console.log("ground touched" + Date.now());
                     this.#velocity.addX(-10 * dt * this.#velocity.x());
                     if(this.#velocity.x() >= -1 && this.#velocity.x() <= 1){
-                        // console.log("stopped");
+                        // console.log("stopped" + Date.now());
                         this.#velocity.setX(0);
                         this.#inMotion = false;
                     }
@@ -549,6 +551,10 @@
             delete(){
                 clearInterval(this.#timer);
                 this.#ob.remove();
+            }
+
+            window_resized(){
+                this.#inMotion = true;
             }
         }
 
@@ -575,6 +581,12 @@
                     this.#sparks[i].delete();
                 }
             }
+
+            window_resized(){
+                for(let i=0; i<this.#sparks.length; i++){
+                    this.#sparks[i].window_resized();
+                }
+            }
         }
 
         class ExplosionsPool {
@@ -586,6 +598,7 @@
                 this.#pool = [];
             }
 
+            // add Explosion
             explode(x, y){
                 const obj = new Explosion(x, y);
 
@@ -595,6 +608,12 @@
                 }
 
                 this.#pool.push(obj);
+            }
+
+            window_resized(){
+                for(let i = 0; i < this.#pool.length; i++){
+                    this.#pool[i].window_resized();
+                }
             }
         }
 
@@ -617,6 +636,9 @@
                 let y = e.clientY + document.body.scrollTop + document.documentElement.scrollTop;
                 pool.explode(x, y);
                 // soundPlay(soundDir);
+            });
+            window.addEventListener('resize', () => {
+                pool.window_resized();
             });
         }
         setClickListener();
