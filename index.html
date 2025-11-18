@@ -397,10 +397,12 @@
         const rand = (min, max) => Math.floor(Math.random() * (max - min) + min);
 
         function randomColor(){
-            let a = rand(0, 2);
+            let a = rand(0, 3);
             if(a == 0)
                 a = "#00cc66";
             else if(a == 1)
+                a = "#B5B5B5";
+            else
                 a = "#ff0033";
             return a;
         }
@@ -574,18 +576,17 @@
         }
         setClickListener();
 
-        // эффект при наведении на Scalar
-        const author = document.getElementById("author");
-        function authorRect() {
-            return author.getBoundingClientRect();
-        }
         // This is hilarious
-        author.addEventListener("mouseenter", () => {
-            const rect = author.getBoundingClientRect();
-            const x = rect.left + rect.width / 2;
-            const y = rect.top + rect.height / 2;
-            explode(x, y);
-        });
+        // const author = document.getElementById("author");
+        // function authorRect() {
+        //     return author.getBoundingClientRect();
+        // }
+        // author.addEventListener("mouseenter", () => {
+        //     const rect = author.getBoundingClientRect();
+        //     const x = rect.left + rect.width / 2;
+        //     const y = rect.top + rect.height / 2;
+        //     explode(x, y);
+        // });
 
     </script>
 
