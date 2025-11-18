@@ -29,6 +29,11 @@
             /* padding: 20px; */
             /* transform: translateY(-20vh); */
             margin-top: 12vh;
+
+            /* no text selection */
+            user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
         }
 
         body {
@@ -55,11 +60,6 @@
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-
-            /* text selecting */
-            user-select: none;
-            -webkit-user-select: none;
-            -ms-user-select: none;
         }
 
         @keyframes titleSpin {
@@ -168,6 +168,11 @@
 /*             width: clamp(280px, 60vw, 380px); */
 /*             min-height: 200px; */
             cursor: pointer;
+
+            /* no text selection */
+            user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
         }
 
         .card:hover {
