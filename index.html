@@ -432,6 +432,8 @@
             #position;
             #velocity;
             #ob;
+            #inMotion;
+            #timer;
 
             constructor(x, y){
                 this.#width = rand(3, 5);
@@ -442,6 +444,10 @@
                 this.#velocity = new Vector(rand(-500, 500), rand(-500, -300));
 
                 this.#ob = this.#createObj();
+
+                this.#inMotion = true;
+
+                this.#timer = this.#setTimer();
             }
 
             #createObj(){
@@ -460,6 +466,23 @@
                 return ob;
             }
 
+            #setTimer(){
+                const ob = this;
+                //fps
+                // milliseconds: 10^-3 = 1/1000
+                const dt = 15; // 1000/15=67fps
+                // const start = Date.now(); // запомнить время начала
+                let last = Date.now();
+                const timer = setInterval(function() {
+                    // сколько времени прошло с начала анимации?
+                    // Закончить анимацию через 0.5 секунды
+                    // if (Date.now() - start >= 500) {}
+                    ob.update((Date.now() - last) / 1000); // magical numbers
+                    last = Date.now();
+                }, dt);
+                return timer;
+            }
+
             update(dt){
                 this.updateVel(dt);
                 this.updatePos(dt);
@@ -473,6 +496,9 @@
             //     this.#ob.style.top = `${this.#position.y()}px`;
             // }
             updatePos(dt){
+                if(!this.#inMotion){
+                    return;
+                }
                 // Move
                 this.#position.addX(dt * this.#velocity.x());
                 this.#position.addY(dt * this.#velocity.y());
@@ -493,6 +519,16 @@
                 if (y <= 0 || y >= maxY) {
                     this.#velocity.setY(0);
                     this.#position.setY(Math.max(0, Math.min(y, maxY)));
+
+                }
+                if (y >= maxY){
+                    // console.log("ground touched");
+                    this.#velocity.addX(-10 * dt * this.#velocity.x());
+                    if(this.#velocity.x() >= -1 && this.#velocity.x() <= 1){
+                        // console.log("stopped");
+                        this.#velocity.setX(0);
+                        this.#inMotion = false;
+                    }
                 }
 
                 this.#ob.style.left = `${this.#position.x()}px`;
@@ -501,11 +537,12 @@
 
 
             updateVel(dt){
-                // this.#velocity.addX(dt * this.#acc.x());
+                this.#velocity.addX(dt * this.#acc.x());
                 this.#velocity.addY(dt * this.#acc.y());
             }
 
             delete(){
+                clearInterval(this.#timer);
                 this.#ob.remove();
             }
         }
@@ -517,43 +554,45 @@
             constructor(x, y){
                 let n = rand(20, 30);
                 this.#sparks = [];
-                for(let i=0; i<n; i++)
+                for(let i=0; i<n; i++){
                     this.#sparks[i] = new Spark(x, y);
+                }
             }
 
             update(dt){
-                for(let i=0; i<this.#sparks.length; i++)
+                for(let i=0; i<this.#sparks.length; i++){
                     this.#sparks[i].update(dt);
+                }
             }
 
             delete(){
-                for(let i=0; i<this.#sparks.length; i++)
+                for(let i=0; i<this.#sparks.length; i++){
                     this.#sparks[i].delete();
+                }
             }
         }
 
+        class ExplosionsPool {
+            #pool;
+            #length;
 
-        function explode(x, y){
-            //fps
-            const dt = 20 / 1000; // 50fps
+            constructor(){
+                this.#length = 20;
+                this.#pool = [];
+            }
 
-            const start = Date.now(); // запомнить время начала
+            explode(x, y){
+                const obj = new Explosion(x, y);
 
-            const obj = new Explosion(x, y);
-
-            const timer = setInterval(function() {
-                // сколько времени прошло с начала анимации?
-                let timePassed = Date.now() - start;
-
-                if (timePassed >= 1500) {
-                    clearInterval(timer); // закончить анимацию через 0.5 секунды
-                    obj.delete();
-                    return;
-                }else {
-                    obj.update(dt);
+                if(this.#pool.length === this.#length){
+                    const removed_item = this.#pool.shift();
+                    removed_item.delete();
                 }
-            }, 20)
-        };
+
+                this.#pool.push(obj);
+            }
+        }
+
 
 
         function soundPlay(dir) {
@@ -567,10 +606,11 @@
         }
 
         function setClickListener(soundDir){
+            const pool = new ExplosionsPool();
             window.addEventListener("mousedown", (e)=>{
                 let x = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
                 let y = e.clientY + document.body.scrollTop + document.documentElement.scrollTop;
-                explode(x, y);
+                pool.explode(x, y);
                 // soundPlay(soundDir);
             });
         }
