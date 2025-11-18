@@ -294,7 +294,7 @@
 
     <footer>
         <div class="bottom">
-            <div class="author">Alar Akilbekov</div>
+            <div class="author" id="author">Alar Akilbekov</div>
 
             <!--<div class="links">
                 <a class="link-btn" href="mailto:alar.akilbekov@gmail.com"><span>Gmail</span></a>
@@ -574,18 +574,17 @@
         setClickListener();
 
         // эффект при наведении на Scalar
-        const title = document.getElementById("title");
-        function titleRect() {
-            return title.getBoundingClientRect();
+        const author = document.getElementById("author");
+        function authorRect() {
+            return author.getBoundingClientRect();
         }
         // This is hilarious
-        // title.addEventListener("mouseenter", () => {
-        //     const rect = title.getBoundingClientRect();
-        //     const x = rect.left + rect.width / 2;
-        //     const y = rect.top + rect.height / 2;
-        //
-        //     explode(x, y);
-        // });
+        author.addEventListener("mouseenter", () => {
+            const rect = author.getBoundingClientRect();
+            const x = rect.left + rect.width / 2;
+            const y = rect.top + rect.height / 2;
+            explode(x, y);
+        });
 
     </script>
 
