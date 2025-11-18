@@ -261,7 +261,7 @@
 <body>
 
     <header>
-        <h1>Scalar</h1>
+        <h1 id="title">Scalar</h1>
         <div class="subtitle">High-Performance Computing</div>
     </header>
 
@@ -396,13 +396,11 @@
         const rand = (min, max) => Math.floor(Math.random() * (max - min) + min);
 
         function randomColor(){
-            let a = rand(0, 3);
+            let a = rand(0, 2);
             if(a == 0)
-                a = "#B5B5B5";
+                a = "#00cc66";
             else if(a == 1)
-                a = "#B5B5B5";
-            else
-                a = "red";
+                a = "#ff0033";
             return a;
         }
 
@@ -464,13 +462,40 @@
                 this.updatePos(dt);
             }
 
+            // updatePos(dt){
+            //     this.#position.addX(dt * this.#velocity.x());
+            //     this.#position.addY(dt * this.#velocity.y());
+            //
+            //     this.#ob.style.left = `${this.#position.x()}px`;
+            //     this.#ob.style.top = `${this.#position.y()}px`;
+            // }
             updatePos(dt){
+                // Move
                 this.#position.addX(dt * this.#velocity.x());
                 this.#position.addY(dt * this.#velocity.y());
+
+                const x = this.#position.x();
+                const y = this.#position.y();
+
+                const w = this.#width;
+                const h = this.#height;
+
+                const maxX = window.innerWidth - w - 1;
+                const maxY = window.innerHeight - h - 1;
+
+                if (x <= 0 || x >= maxX) {
+                    this.#velocity.setX(0);
+                    this.#position.setX(Math.max(0, Math.min(x, maxX)));
+                }
+                if (y <= 0 || y >= maxY) {
+                    this.#velocity.setY(0);
+                    this.#position.setY(Math.max(0, Math.min(y, maxY)));
+                }
 
                 this.#ob.style.left = `${this.#position.x()}px`;
                 this.#ob.style.top = `${this.#position.y()}px`;
             }
+
 
             updateVel(dt){
                 // this.#velocity.addX(dt * this.#acc.x());
@@ -487,7 +512,7 @@
             #sparks;
 
             constructor(x, y){
-                let n = rand(10, 20);
+                let n = rand(20, 30);
                 this.#sparks = [];
                 for(let i=0; i<n; i++)
                     this.#sparks[i] = new Spark(x, y);
@@ -507,7 +532,7 @@
 
         function explode(x, y){
             //fps
-            const dt = 20 / 1000;
+            const dt = 20 / 1000; // 50fps
 
             const start = Date.now(); // запомнить время начала
 
@@ -517,7 +542,7 @@
                 // сколько времени прошло с начала анимации?
                 let timePassed = Date.now() - start;
 
-                if (timePassed >= 500) {
+                if (timePassed >= 1500) {
                     clearInterval(timer); // закончить анимацию через 0.5 секунды
                     obj.delete();
                     return;
@@ -547,6 +572,20 @@
             });
         }
         setClickListener();
+
+        // эффект при наведении на Scalar
+        const title = document.getElementById("title");
+        function titleRect() {
+            return title.getBoundingClientRect();
+        }
+        // This is hilarious
+        // title.addEventListener("mouseenter", () => {
+        //     const rect = title.getBoundingClientRect();
+        //     const x = rect.left + rect.width / 2;
+        //     const y = rect.top + rect.height / 2;
+        //
+        //     explode(x, y);
+        // });
 
     </script>
 
