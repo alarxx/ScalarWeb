@@ -18,12 +18,14 @@
 
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: flex-start; /*center;*/
+
             align-items: center;
             min-height: 100vh;
             text-align: center;
-            /*padding: 20px; */
-            transform: translateY(-20vh);
+            /* padding: 20px; */
+            /* transform: translateY(-20vh); */
+            padding-top: 12vh;
         }
 
         h1 {
@@ -102,6 +104,7 @@
             background: #1a1a1a;
             border: 1px solid #333;
             color: #fff;
+            font-size: 1rem;
             font-weight: bold;
             text-align: center;
         }
@@ -115,24 +118,235 @@
             .subtitle { font-size: 1.1rem; }
         }
 
+        /* Products */
+        .products {
+            margin-top: 50px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+
+        }
+
+        .card {
+            display: block;
+            position: relative;
+            background: #141414;
+            border: 1px solid #222;
+            border-radius: 12px;
+            padding: 22px 28px;
+/*             text-align: left; */
+            transition: border-color 0.25s, transform 0.25s;
+
+            width: clamp(260px, 70%, 420px);
+/*             width: clamp(300px, 55vw, 600px); */
+/*             width: min(560px, 80vw); */
+/*             width: clamp(280px, 60vw, 380px); */
+/*             min-height: 200px; */
+            cursor: pointer;
+        }
+
+        .card:hover {
+            border-color: #ff0066;
+            transform: translateY(-4px);
+        }
+        .card::before {
+            content: "";
+            position: absolute;
+
+            inset: -1px;
+            z-index: -1;
+            border-radius: inherit;
+            opacity: 0;
+            transition: opacity 0.25s ease-in-out;
+
+            /* Градиент */
+            background: linear-gradient(120deg, #ff0033, #00cc66, #ff0033);
+            background-size: 300% 300%;
+
+            padding: 2px;
+            -webkit-mask:
+                linear-gradient(#fff 0 0) content-box,
+                linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+                    mask-composite: exclude;
+
+            pointer-events: none;
+        }
+        .card:hover::before {
+            opacity: 1;
+            animation: spin 2s linear infinite;
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #fff;
+        }
+
+        .card-desc {
+            font-size: 1.05rem;
+            opacity: 0.75;
+            line-height: 1.45;
+        }
+
+        /* product buttons */
+        .product-nav-btn {
+            background: transparent;
+            border: none;
+            color: #777;
+            font-size: 1.6rem;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 8px;
+            transition: color .2s ease-in-out, background .2s ease-in-out;
+        }
+        .product-nav-btn:hover {
+            color: #fff;
+            background: #1a1a1a;
+        }
+        .product-nav-btn:disabled {
+            opacity: 0.25;
+            cursor: default;
+            background: transparent;
+        }
+        .products-indicator {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+
     </style>
 </head>
 
 <body>
 
-    <h1>Scalar</h1>
-    <div class="subtitle">Optical Character Recognition (OCR)</div>
+    <header>
+        <h1>Scalar</h1>
+        <div class="subtitle">High-Performance Computing</div>
+    </header>
 
-    <div class="bottom">
-        <div class="author">Alar Akilbekov</div>
+    <main>
 
-        <div class="links">
-            <a class="link-btn" href="mailto:alar.akilbekov@gmail.com"><span>Gmail</span></a>
-            <a class="link-btn" href="https://github.com/alarxx/"><span>GitHub</span></a>
-            <a class="link-btn" href="https://www.linkedin.com/in/alar-akilbekov/"><span>LinkedIn</span></a>
-            <a class="link-btn" href="https://t.me/alarxx/"><span>Telegram</span></a>
+       <!-- <section class="products">
+            <button class="product-nav-btn" id="prev-btn" aria-label="Previous product">&lt;</button>
+            <div class="card" id="product-card">
+                <div class="card-title" id="product-title">Product...</div>
+                <div class="card-desc" id="product-desc">Description...</div>
+            </div>
+            <button class="product-nav-btn" id="next-btn" aria-label="Next product">&gt;</button>
+        </section>
+        <div class="products-indicator" id="product-indicator">/</div>-->
+
+        <!--<section class="products">
+            <div class="card" href="https://ocr.scalar.kz">
+                <div class="card-title">OCR Engine</div>
+                <div class="card-desc"></div>
+            </div>
+
+            <div class="card" href="https://github.com/alarxx/Tensor-library">
+                <div class="card-title">Tensor-Library</div>
+                <div class="card-desc"></div>
+            </div>
+        </section>-->
+
+        <section class="products" id="products"></section>
+    </main>
+
+    <bottom>
+        <div class="bottom">
+            <div class="author">Alar Akilbekov</div>
+
+            <div class="links">
+                <a class="link-btn" href="mailto:alar.akilbekov@gmail.com"><span>Gmail</span></a>
+                <a class="link-btn" href="https://github.com/alarxx/"><span>GitHub</span></a>
+                <a class="link-btn" href="https://www.linkedin.com/in/alar-akilbekov/"><span>LinkedIn</span></a>
+                <a class="link-btn" href="https://t.me/alarxx/"><span>Telegram</span></a>
+            </div>
         </div>
-    </div>
+    </bottom>
+
+    <!--carousel cards-->
+    <!--<script>
+        const products = [
+            { title: "OCR\u00A0Engine", desc: "", link: "https://ocr.scalar.kz"},
+            { title: "Tensor-Library", desc: "", link: "https://github.com/alarxx/Tensor-library"},
+        ];
+
+        let currentIndex = 0;
+
+        const cardEl = document.getElementById("product-card");
+        const titleEl = document.getElementById("product-title");
+        const descEl = document.getElementById("product-desc");
+        const indicatorEl = document.getElementById("product-indicator");
+        const prevBtn = document.getElementById("prev-btn");
+        const nextBtn = document.getElementById("next-btn");
+
+        function renderProduct() {
+            const p = products[currentIndex];
+            titleEl.innerHTML = p.title;
+            descEl.textContent = p.desc;
+            indicatorEl.textContent = (currentIndex + 1) + " / " + products.length;
+
+            prevBtn.disabled = currentIndex === 0;
+            nextBtn.disabled = currentIndex === products.length - 1;
+
+            cardEl.onclick = () => {
+                window.location.href = p.link;
+            };
+        }
+
+        prevBtn.addEventListener("click", () => {
+            if (currentIndex > 0) {
+                currentIndex--;
+                renderProduct();
+            }
+        });
+
+        nextBtn.addEventListener("click", () => {
+            if (currentIndex < products.length - 1) {
+                currentIndex++;
+                renderProduct();
+            }
+        });
+
+        renderProduct();
+    </script>-->
+
+    <script>
+        const products = [
+            { title: "Tensor-library", desc: "", link: "https://github.com/alarxx/Tensor-library" },
+            { title: "OCR\u00A0Engine", desc: "", link: "https://ocr.scalar.kz" },
+        ];
+
+        const container = document.getElementById("products");
+
+        products.forEach(p => {
+            const card = document.createElement("div");
+            card.className = "card";
+
+            const title = document.createElement("div");
+            title.className = "card-title";
+            title.textContent = p.title;
+
+            const desc = document.createElement("div");
+            desc.className = "card-desc";
+            desc.textContent = p.desc;
+
+            card.appendChild(title);
+            card.appendChild(desc);
+
+            card.onclick = () => {
+                window.location.href = p.link;
+            };
+
+            container.appendChild(card);
+        });
+    </script>
+
 
 </body>
 </html>
