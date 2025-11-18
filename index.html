@@ -5,7 +5,7 @@
 
     <meta name="author" content="Alar Akilbekov">
     <meta name="description" content="tensor-library, ocr">
-    <meta name="keywords" content="tensor-library, ocr">
+    <meta name="keywords" content="High-Performance Computing">
 
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="mobile-web-app-capable" content="yes">
@@ -476,12 +476,15 @@
                 //fps
                 // milliseconds: 10^-3 = 1/1000
                 const dt = 15; // 1000/15=67fps
-                // const start = Date.now(); // запомнить время начала
+                const start = Date.now(); // запомнить время начала
                 let last = Date.now();
                 const timer = setInterval(function() {
                     // сколько времени прошло с начала анимации?
-                    // Закончить анимацию через 0.5 секунды
-                    // if (Date.now() - start >= 500) {}
+                    // Закончить анимацию через 0.5, 3 секунды
+                    if (Date.now() - start >= 3000) {
+                        ob.delete();
+                        return;
+                    }
                     ob.update((Date.now() - last) / 1000); // magical numbers
                     last = Date.now();
                 }, dt);
@@ -501,9 +504,6 @@
             //     this.#ob.style.top = `${this.#position.y()}px`;
             // }
             updatePos(dt){
-                if(!this.#inMotion){
-                    return;
-                }
                 // Move
                 this.#position.addX(dt * this.#velocity.x());
                 this.#position.addY(dt * this.#velocity.y());
