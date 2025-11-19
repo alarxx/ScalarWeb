@@ -556,7 +556,8 @@
 
             delete(){
                 clearInterval(this.#timer);
-                this.#ob.remove();
+                this.#ob.remove(); // delete from DOM, so it is invisible
+                // here if if was deleted by #setTimer function, it is still exist in Explosion list
             }
 
             window_resized(){
